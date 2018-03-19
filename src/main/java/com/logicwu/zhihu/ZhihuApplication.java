@@ -13,6 +13,7 @@ public class ZhihuApplication extends SpringBootServletInitializer {
     }
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ZhihuApplication.class, args);
 	}
 }
