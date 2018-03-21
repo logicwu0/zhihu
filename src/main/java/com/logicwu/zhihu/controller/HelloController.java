@@ -1,7 +1,9 @@
 package com.logicwu.zhihu.controller;
 
 
+import com.logicwu.zhihu.dao.LoginTicketDAO;
 import com.logicwu.zhihu.dao.QuestionDAO;
+import com.logicwu.zhihu.model.LoginTicket;
 import com.logicwu.zhihu.model.Question;
 import com.logicwu.zhihu.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HelloController {
@@ -19,6 +22,8 @@ public class HelloController {
 
     @Autowired
     QuestionDAO questionDAO;
+    @Autowired
+    LoginTicketDAO loginTicketDAO;
 
     @ResponseBody
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
@@ -28,13 +33,16 @@ public class HelloController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/helloq",method = RequestMethod.GET)
+    @RequestMapping(value = "/helloq")
 
-    public List helloq(@RequestParam("id") int id) {
+    public List helloq(@RequestParam("id") int id,@RequestParam("token") String token) {
 
-        List<Question> list = new ArrayList<>();
+        List<Map> list = new ArrayList<>();
+        List<LoginTicket> list1 = new ArrayList<>();
         Question q1 = questionDAO.getById(id);
-        list.add(q1);
-        return list;
+        LoginTicket l1 = loginTicketDAO.selectByTicket(token);
+        list.add((Map) q1);
+        list1.add(l1);
+        return list1;
     }
 }
