@@ -2,6 +2,7 @@ package com.logicwu.zhihu.dao;
 
 
 import com.logicwu.zhihu.model.Question;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,4 +15,7 @@ public interface QuestionDAO {
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
     Question getById(int id);
+    @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
+            ") values (#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
+    int addQuestion(Question question);
 }

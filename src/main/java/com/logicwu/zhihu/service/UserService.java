@@ -60,7 +60,7 @@ public class UserService {
         LoginTicket ticket = new LoginTicket();
         ticket.setUserId(userId);
         Date date = new Date();
-        date.setTime(date.getTime() + 1000 * 20);
+        date.setTime(date.getTime() + 1000*3600*24);
         ticket.setExpired(date);
         ticket.setStatus(0);
         ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
