@@ -5,8 +5,6 @@ import com.logicwu.zhihu.dao.LoginTicketDAO;
 import com.logicwu.zhihu.dao.UserDAO;
 import com.logicwu.zhihu.model.LoginTicket;
 import com.logicwu.zhihu.model.User;
-import com.logicwu.zhihu.util.ZhihuUtil;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
