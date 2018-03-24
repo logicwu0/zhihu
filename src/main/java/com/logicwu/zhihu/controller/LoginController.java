@@ -1,19 +1,20 @@
 package com.logicwu.zhihu.controller;
 
 
+import com.logicwu.zhihu.model.common.ResultData;
 import com.logicwu.zhihu.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.spi.http.HttpContext;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,9 @@ public class LoginController {
      * */
     @ResponseBody
     @RequestMapping(value = "/login")
-    public List<Map> login(Model model, @RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response) {
+    public List<Map> login( @RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response) {
         List<Map> lists = new ArrayList<>();
+        Map<String, Object> map1 = new HashMap<>();
         try {
             Map<String, Object> map = userService.login(username, password);
             if (map.containsKey("ticket")) {
@@ -52,7 +54,7 @@ public class LoginController {
                 return "redirect:/";
             } else {
             */
-                model.addAttribute("msg", map.get("msg"));
+                map1.put("msg", map.get("msg"));
                 lists.add(map);
                 return lists;
             }
@@ -63,4 +65,41 @@ public class LoginController {
         }
         return lists;
     }
+
+    /**
+     * 注册接口
+     *
+     * */
+    @ResponseBody
+    @RequestMapping(value = "/reg", method = {RequestMethod.POST},produces="application/json;charset=utf-8")
+    public ResultData reg(@RequestBody String username,
+                          @RequestBody String password,
+                          HttpServletResponse response) {
+        Map<String, Object> map1 = new HashMap<>();
+        ResultData resultData = new ResultData();
+
+        try {
+            Map<String, Object> map = userService.register(username, password);
+            if (map.containsKey("ticket")) {
+                Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+                cookie.setPath("/");
+                response.addCookie(cookie);
+
+                resultData.setMessage("注册成功");
+            }
+            else{
+                map1.put("msg", map.get("msg"));
+                resultData.setMessage("注册失败");
+                resultData.setData(map1);
+            }
+
+        } catch (Exception e) {
+            logger.error("注册异常" + e.getMessage());
+            map1.put("msg", "服务器错误");
+            resultData.setMessage("注册失败");
+            resultData.setData(map1);
+        }
+        return resultData;
+    }
+
 }
