@@ -2,9 +2,7 @@ package com.logicwu.zhihu.dao;
 
 
 import com.logicwu.zhihu.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface QuestionDAO {
@@ -18,4 +16,7 @@ public interface QuestionDAO {
     @Insert({"insert into ", TABLE_NAME, "(", INSERT_FIELDS,
             ") values (#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
     int addQuestion(Question question);
+
+    @Update({"update ", TABLE_NAME, " set comment_count = #{commentCount} where id=#{id}"})
+    int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
 }
