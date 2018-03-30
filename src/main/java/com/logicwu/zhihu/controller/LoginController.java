@@ -83,13 +83,13 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
                 response.addCookie(cookie);
-
                 resultData.setMessage("注册成功");
             }
             else{
                 map1.put("msg", map.get("msg"));
                 resultData.setMessage("注册失败");
                 resultData.setData(map1);
+                resultData.setSuccess(false);
             }
 
         } catch (Exception e) {
@@ -97,6 +97,7 @@ public class LoginController {
             map1.put("msg", "服务器错误");
             resultData.setMessage("注册失败");
             resultData.setData(map1);
+            resultData.setSuccess(false);
         }
         return resultData;
     }
