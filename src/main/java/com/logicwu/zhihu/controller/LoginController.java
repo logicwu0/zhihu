@@ -1,6 +1,7 @@
 package com.logicwu.zhihu.controller;
 
 
+import com.logicwu.zhihu.model.User;
 import com.logicwu.zhihu.model.common.ResultData;
 import com.logicwu.zhihu.service.UserService;
 import org.slf4j.Logger;
@@ -71,15 +72,13 @@ public class LoginController {
      *
      * */
     @ResponseBody
-    @RequestMapping(value = "/reg", method = {RequestMethod.POST},produces="application/json;charset=utf-8")
-    public ResultData reg(@RequestBody String username,
-                          @RequestBody String password,
+    @RequestMapping(value = "/reg", method = RequestMethod.POST)
+    public ResultData reg(@RequestBody User user,
                           HttpServletResponse response) {
         Map<String, Object> map1 = new HashMap<>();
         ResultData resultData = new ResultData();
-
         try {
-            Map<String, Object> map = userService.register(username, password);
+            Map<String, Object> map = userService.register(user.getName(), user.getPassword());
             if (map.containsKey("ticket")) {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");
