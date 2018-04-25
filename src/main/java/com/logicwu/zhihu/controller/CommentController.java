@@ -37,7 +37,7 @@ public class CommentController {
         return resultData;
     }
 
-    @RequestMapping(path = {"/user/addNews/"}, method = {RequestMethod.POST})
+    @RequestMapping(value = "/user/addNews", method = {RequestMethod.POST})
     @ResponseBody
     public String addNews(@RequestParam("image") String image,
                           @RequestParam("title") String title,
