@@ -3,6 +3,7 @@ package com.logicwu.zhihu.controller;
 
 import com.logicwu.zhihu.model.News;
 import com.logicwu.zhihu.model.common.ResultData;
+import com.logicwu.zhihu.service.CommentService;
 import com.logicwu.zhihu.service.NewsService;
 import com.logicwu.zhihu.util.ZhihuUtil;
 import org.slf4j.Logger;
@@ -16,12 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CommentController {
 
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    CommentService commentService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
@@ -61,7 +67,21 @@ public class CommentController {
             logger.error("添加资讯失败", e.getMessage());
             return ZhihuUtil.getJSONString(1, "发布失败");
         }
+    }
 
+    @RequestMapping(value = "commentList", method = {RequestMethod.GET})
+    @ResponseBody
+    public ResultData commentList() {
+        ResultData resultData = new ResultData();
+        try {
+
+            List<Map> commentList = commentService.selectCommentList();
+            resultData.setData(commentList);
+
+        } catch (Exception e) {
+            logger.error("查找失败" + e.getMessage());
+        }
+        return resultData;
     }
 
 }

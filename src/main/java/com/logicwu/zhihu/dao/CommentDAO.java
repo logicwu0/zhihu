@@ -4,6 +4,7 @@ import com.logicwu.zhihu.model.Comment;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CommentDAO {
@@ -31,4 +32,7 @@ public interface CommentDAO {
 
     @Select({"select count(id) from ", TABLE_NAME, " where user_id=#{userId}"})
     int getUserCommentCount(int userId);
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME})
+    List<Map> selectCommentList();
+
 }
