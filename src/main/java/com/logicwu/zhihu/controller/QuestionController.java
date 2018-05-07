@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QuestionController {
@@ -50,4 +53,27 @@ public class QuestionController {
         }
         return resultData;
     }
+
+    @RequestMapping(value = "/question/search",method = {RequestMethod.GET})
+    @ResponseBody
+    public ResultData questionList() {
+
+        ResultData resultData = new ResultData();
+        //ArrayList list = new ArrayList();
+
+        try {
+
+            List<Map> questionList = questionService.getQuestion();
+
+            resultData.setData(questionList);
+            //list.add(questionList);
+
+        } catch (Exception e) {
+            logger.error("查找失败" + e.getMessage());
+        }
+
+        return resultData;
+
+    }
+
 }

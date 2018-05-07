@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.List;
+
 @Service
 public class QuestionService {
 
@@ -28,6 +30,10 @@ public class QuestionService {
 
     public int updateCommentCount(int id, int count) {
         return questionDAO.updateCommentCount(id, count);
+    }
+
+    public List getQuestion() {
+        return questionDAO.getQuestion();
     }
 
 }

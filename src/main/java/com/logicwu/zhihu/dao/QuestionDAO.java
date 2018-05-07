@@ -4,6 +4,9 @@ package com.logicwu.zhihu.dao;
 import com.logicwu.zhihu.model.Question;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface QuestionDAO {
 
@@ -19,4 +22,7 @@ public interface QuestionDAO {
 
     @Update({"update ", TABLE_NAME, " set comment_count = #{commentCount} where id=#{id}"})
     int updateCommentCount(@Param("id") int id, @Param("commentCount") int commentCount);
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME})
+    List<Map> getQuestion();
+
 }
