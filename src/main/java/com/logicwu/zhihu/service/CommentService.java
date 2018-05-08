@@ -4,10 +4,11 @@ import com.logicwu.zhihu.dao.CommentDAO;
 import com.logicwu.zhihu.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Mapper
+@Service
 public class CommentService {
 
     @Autowired

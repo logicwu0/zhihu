@@ -69,7 +69,7 @@ public class CommentController {
         }
     }
 
-    @RequestMapping(value = "commentList", method = {RequestMethod.GET})
+    @RequestMapping(value = "/commentList", method = {RequestMethod.GET})
     @ResponseBody
     public ResultData commentList() {
         ResultData resultData = new ResultData();
