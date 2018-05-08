@@ -15,7 +15,7 @@ public class CorsFilter implements Filter {
 
     final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
 
-    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8181");
+    private final List<String> allowedOrigins = Arrays.asList("http://localhost:8082");
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
